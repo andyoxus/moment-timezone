@@ -26,12 +26,12 @@ function dedupe(zone) {
 }
 
 function findVersion (source) {
-	var matches = source.match(/\nRelease (\d{4}[a-z]) /);
+	var matches = source.match(/^(\d{4}[a-z])/);
 
 	if (matches && matches[1]) {
 		return matches[1];
 	}
-	throw new Error("Could not find version from temp/download/latest/NEWS.");
+	throw new Error("Could not find version from temp/download/version.");
 }
 
 module.exports = function (grunt) {
@@ -46,7 +46,7 @@ module.exports = function (grunt) {
 			};
 
 		if (version === 'latest') {
-			output.version = findVersion(grunt.file.read('temp/download/latest/NEWS'));
+			output.version = findVersion(grunt.file.read('temp/download/latest/version'));
 		}
 
 		grunt.file.mkdir('data/unpacked');
